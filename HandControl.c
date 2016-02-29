@@ -6,7 +6,7 @@ void closeHand(){
 
 }
 
-void liftEnbow(){
+void liftElbow(){
 
 }
 
