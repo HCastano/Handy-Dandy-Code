@@ -11,20 +11,18 @@ to the fingers closing and grasping an object.
 */
 
 
-/*
+//Moves a general finger, look into replacing
+//the three other functions with this one...
+void moveFinger(int finger, bool close){
+	time[0] = 0; 
 
-
-*/
-void openHand(){
+	if (close)
+		motor[finger] = 50; 
+	else
+		motor[finger] = -50; 
 	
-}
-
-/*
-
-
-*/
-void closeHand(){
-
+	while (time[0] < 2000){}
+	motor[finger] = 0; 
 }
 
 void moveThumb(bool close){
@@ -42,15 +40,56 @@ void moveThumb(bool close){
 
 }
 
-void moveIndex(){
+void moveIndex(bool close){
+
+	time[1] = 0; 
+
+	if (close)
+		motor[motorB] = 50; 
+	else
+		motor[motorB] = -50; 
+	
+	while (time[1] < 2000){}
+	motor[motorB] = 0; 
 
 }
 
 //Look into changing the function name 
 void moveRingPinky(){
 
+	time[2] = 0; 
+
+	if (close)
+		motor[motorC] = 50; 
+	else
+		motor[motorC] = -50; 
+	
+	while (time[2] < 2000){}
+	motor[motorC] = 0; 
+
 }
 
+/*
+
+
+*/
+void openHand(bool close){
+
+}
+
+/*
+
+
+*/
+void closeHand(){
+
+	//Example of closing all the fingers
+	//motorA = 0, motorB = 1, motorC = 2
+	moveFinger(0, true); 
+	moveFinger(1, true); 
+	moveFinger(2, true); 
+
+}
 task main (){
 
 
