@@ -25,57 +25,6 @@ void moveFinger(int finger, bool close){
 	motor[finger] = 0; 
 }
 
-void moveThumb(bool close){
-
-	//Need to find optimal speed for closing and opening 
-	time1[0] = 0; 
-
-	if (close)
-		motor[motorA] = 50; 
-	else
-		motor[motorA] = -50; 
-	
-	while (time1[0] < 2000){}
-	motor[motorA] = 0; 
-
-}
-
-void moveIndex(bool close){
-
-	time1[1] = 0; 
-
-	if (close)
-		motor[motorB] = 50; 
-	else
-		motor[motorB] = -50; 
-	
-	while (time1[1] < 2000){}
-	motor[motorB] = 0; 
-
-}
-
-//Look into changing the function name 
-void moveRingPinky(){
-
-	time1[2] = 0; 
-
-	if (close)
-		motor[motorC] = 50; 
-	else
-		motor[motorC] = -50; 
-	
-	while (time1[2] < 2000){}
-	motor[motorC] = 0; 
-
-}
-
-/*
-
-
-*/
-void openHand(bool close){
-
-}
 
 /*
 
