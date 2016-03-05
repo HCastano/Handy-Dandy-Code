@@ -11,7 +11,7 @@ Param lift Boolean containing whether to raise or drop the elbow
 */
 void liftElbow(bool lift){
 	
-	time[0] = 0; 
+	time1[0] = 0; 
 
 	if (lift)
 		motor[motorA] = 75; 
@@ -21,7 +21,7 @@ void liftElbow(bool lift){
 		motor[motorB] = -75; 
 	
 
-	while (time[0] < 2000){}
+	while (time1[0] < 2000){}
 	motor[motorA] = 0; 
 	motor[motorB] = 0; 
 }
@@ -34,14 +34,14 @@ Param cw Boolean contains the direction of rotation
 
 */
 void rotateWrist(bool clockwise){
-	time[1] = 0; 
+	time1[1] = 0; 
 
 	if (clockwise)
 		motor[motorC] = 35; 
 	else
 		motor[motorC] = -35; 
 
-	while (time[1] < 1000){}
+	while (time1[1] < 1000){}
 	motor[motorC] = 0; 
 
 }

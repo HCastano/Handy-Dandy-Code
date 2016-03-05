@@ -14,42 +14,42 @@ to the fingers closing and grasping an object.
 //Moves a general finger, look into replacing
 //the three other functions with this one...
 void moveFinger(int finger, bool close){
-	time[0] = 0; 
+	time1[0] = 0; 
 
 	if (close)
 		motor[finger] = 50; 
 	else
 		motor[finger] = -50; 
 	
-	while (time[0] < 2000){}
+	while (time1[0] < 2000){}
 	motor[finger] = 0; 
 }
 
 void moveThumb(bool close){
 
 	//Need to find optimal speed for closing and opening 
-	time[0] = 0; 
+	time1[0] = 0; 
 
 	if (close)
 		motor[motorA] = 50; 
 	else
 		motor[motorA] = -50; 
 	
-	while (time[0] < 2000){}
+	while (time1[0] < 2000){}
 	motor[motorA] = 0; 
 
 }
 
 void moveIndex(bool close){
 
-	time[1] = 0; 
+	time1[1] = 0; 
 
 	if (close)
 		motor[motorB] = 50; 
 	else
 		motor[motorB] = -50; 
 	
-	while (time[1] < 2000){}
+	while (time1[1] < 2000){}
 	motor[motorB] = 0; 
 
 }
@@ -57,14 +57,14 @@ void moveIndex(bool close){
 //Look into changing the function name 
 void moveRingPinky(){
 
-	time[2] = 0; 
+	time1[2] = 0; 
 
 	if (close)
 		motor[motorC] = 50; 
 	else
 		motor[motorC] = -50; 
 	
-	while (time[2] < 2000){}
+	while (time1[2] < 2000){}
 	motor[motorC] = 0; 
 
 }
@@ -90,6 +90,7 @@ void closeHand(){
 	moveFinger(2, true); 
 
 }
+
 task main (){
 
 
