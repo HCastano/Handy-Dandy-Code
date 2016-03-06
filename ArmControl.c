@@ -13,13 +13,13 @@ void liftElbow(bool lift){
 	
 	time1[0] = 0; 
 
-	if (lift)
+	if (lift){
 		motor[motorA] = 75; 
 		motor[motorB] = 75; 
-	else
+	}else{
 		motor[motorA] = -75; 
 		motor[motorB] = -75; 
-	
+	}
 
 	while (time1[0] < 2000){}
 	motor[motorA] = 0; 
@@ -65,15 +65,23 @@ int getMessage(){
 		}
 }
 
+void activateMotor(int num){
+
+	motor[motorA] = 50;
+
+	time1[0] = 0; 
+	while (time1[0] < 1000); 
+
+}
+
 task main(){
 	
 	int my_message = 0; 
 
 	while (true){
-		
+
 		if (messageAvailable() == true){
-			my_message = getMessage(); 
-			nxtDisplayString(0, "%d", my_message); 
+			activateMotor(getMessage());  
 		}
 
 		wait1Msec(100); 

@@ -49,9 +49,21 @@ task main (){
 	NOTE: A value of 0 CANNOT be sent via Bluetooth, as it 
 	indicates that no message is being sent. 
 	*/
-	for (int i = 0; i < 1001; i++){
-		sendMessage(i); 
-		waitIMsec(100); 
-	}
 
+	while (true){
+
+		while (nNxtButtonPressed == -1){}
+
+		while (nNxtButtonPressed != -1){}
+
+		if (nNxtButtonPressed == 1){
+			sendMessage(1); 
+		}else if(nNxtButtonPressed == 2){
+			sendMessage(2); 
+		}else{
+			if (nNxtButtonPressed == 3){
+				sendMessage(3); 
+			}
+		}
+	}
 }
