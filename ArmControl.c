@@ -67,10 +67,12 @@ int getMessage(){
 
 void activateMotor(int num){
 
-	motor[motorA] = 50;
+	motor[motorA] = 10 * num;
 
 	time1[0] = 0; 
 	while (time1[0] < 1000); 
+
+	motor[motorA] = 0; 
 
 }
 
@@ -81,7 +83,11 @@ task main(){
 	while (true){
 
 		if (messageAvailable() == true){
-			activateMotor(getMessage());  
+
+			my_message = getMessage(); //retrieve that message from memory.
+			nxtDisplayString(0,"%d",my_message);
+
+			activateMotor(my_message);  
 		}
 
 		wait1Msec(100); 

@@ -54,14 +54,16 @@ task main (){
 
 		while (nNxtButtonPressed == -1){}
 
-		while (nNxtButtonPressed != -1){}
+		int button = nNxtButtonPressed; 
 
-		if (nNxtButtonPressed == 1){
+		while (nNxtButtonPressed != button){}
+
+		if (button == 1){
 			sendMessage(1); 
-		}else if(nNxtButtonPressed == 2){
+		}else if(button == 2){
 			sendMessage(2); 
 		}else{
-			if (nNxtButtonPressed == 3){
+			if (button == 3){
 				sendMessage(3); 
 			}
 		}
