@@ -67,12 +67,12 @@ int getMessage(){
 
 void activateMotor(int num){
 
-	motor[motorA] = 10 * num;
+	motor[num - 1] = 20 * num;
 
 	time1[0] = 0; 
 	while (time1[0] < 1000); 
 
-	motor[motorA] = 0; 
+	motor[num - 1] = 0; 
 
 }
 
