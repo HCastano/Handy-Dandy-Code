@@ -46,6 +46,37 @@ void rotateWrist(bool clockwise){
 
 }
 
+bool messageAvailable(){
+	if (message == 0){
+		return false; 
+	}else{
+		return true; 
+	}
+}
+
+int getMessage(){
+		if (message != 0){
+			int receivedMessage = message; 
+			ClearMessage(); 
+			return receivedMessage; 
+		}else{
+			return 0; 
+
+		}
+}
+
 task main(){
 	
+	int my_message = 0; 
+
+	while (true){
+		
+		if (messageAvailable() == true){
+			my_message = getMessage(); 
+			nxtDisplayString(0, "%d", my_message); 
+		}
+
+		wait1Msec(100); 
+
+	}
 }

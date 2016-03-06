@@ -42,5 +42,16 @@ void closeHand(){
 
 task main (){
 
+	wait1Msec(500); 
+
+	/*
+	Transmits a sequence of integers ever 1/10th of a second. 
+	NOTE: A value of 0 CANNOT be sent via Bluetooth, as it 
+	indicates that no message is being sent. 
+	*/
+	for (int i = 0; i < 1001; i++){
+		sendMessage(i); 
+		waitIMsec(100); 
+	}
 
 }
