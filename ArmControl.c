@@ -7,24 +7,29 @@ well as the wrist code.
 Activates the two motors at the elbow joint 
 in order to lift the arm. 
 
-Param lift Boolean containing whether to raise or drop the elbow
+Param lift boolean containing whether to raise or drop the elbow
 */
-void liftElbow(bool lift){
-	
-	time1[0] = 0; 
+void liftArm (bool lift){
+  //Check the param being passed 
+  
+	nMotorEncoder[motorA]= 0;
+	while (nNxtButtonPressed==-1){};
 
-	if (lift){
-		motor[motorA] = 75; 
-		motor[motorB] = 75; 
-	}else{
-		motor[motorA] = -75; 
-		motor[motorB] = -75; 
+	if (nNxtButtonPressed==1){
+		motor[motorA]=75;
+		motor[motorC]=75;
+		while (nMotorEncoder[motorA]<720){};
+	}
+	if (nNxtButtonPressed==2){
+		motor[motorA]=-75;
+		motor[motorC]=-75;
+		while (nMotorEncoder[motorA]> 10){};
 	}
 
-	while (time1[0] < 2000){}
-	motor[motorA] = 0; 
-	motor[motorB] = 0; 
+	motor[motorA]=0;
+	motor[motorC]=0;
 }
+
 
 /*
 Rotates the wrist in a given direction through the 
@@ -85,7 +90,7 @@ task main(){
 		if (messageAvailable() == true){
 
 			my_message = getMessage(); //retrieve that message from memory.
-			nxtDisplayString(0,"%d",my_message);
+			displayString(0,"%d",my_message);
 
 			activateMotor(my_message);  
 		}
