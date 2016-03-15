@@ -27,6 +27,9 @@ void liftArm (bool lift){
 		displayString(0, "Down"); 
 	}
 	
+	time1[0] = 0; 
+	while (time1[0] < 2000){} 
+	
 	motor[motorA]=0;
 	motor[motorC]=0;
 }
@@ -52,6 +55,10 @@ void rotateWrist(bool clockwise){
 		motor[motorB] = 25; 
 		while (nMotorEncoder[motorB] <= 90){}
 	}
+	
+	time1[0] = 0; 
+	while (time1[0] < 2000){}
+	motor[motorB] = 0; 
 
 }
 
@@ -75,37 +82,7 @@ int getMessage(){
 		}
 }
 
-task main(){
-	
-
-
-
-	//if (button == 1){
-	//	liftArm(true); 
-	//}
-	//else{
-	//	if (button == 2)
-	//		liftArm(false); 
-	//}
-	
-	while (true){
-	
-	while (nNxtButtonPressed == -1){}
-	int button = nNxtButtonPressed; 
-	while (nNxtButtonPressed != -1){}
-	
-	if (button == 1){
-		rotateWrist(true); 
-	}else{
-		if (button == 2)
-				rotateWrist(false); 
-	}
-	
-	
-	}
-	
-	displayString(1, "Success"); 
-	wait10Msec(1000); 
+task main(){ 
 		
 	int my_message = 0; 
 
@@ -116,7 +93,12 @@ task main(){
 			my_message = getMessage(); //retrieve that message from memory.
 			displayString(0,"%d",my_message);
 
-			//activateMotor(my_message);  
+			if (my_message == 1){
+				liftArm(true); 
+				rotateWrist(true); 
+				liftArm(false); 
+			}
+			
 		}
 
 		wait1Msec(100); 

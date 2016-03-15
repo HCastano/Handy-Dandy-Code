@@ -48,6 +48,12 @@ void closeHand(bool close){
 
 }
 
+void idObject(){
+
+	displayString(3, "DON'T FORGET ME"); 
+
+}
+
 task main (){
 
 	wait1Msec(500); 
@@ -58,6 +64,12 @@ task main (){
 	indicates that no message is being sent. 
 	*/
 
+	
+	/*
+	sendMessage values: 
+	1 - Function that lifts elbow, rotates wrist, then drops elblow 
+	
+	*/
 
 	while (true){
 
@@ -65,25 +77,17 @@ task main (){
 		int button = nNxtButtonPressed; 
 		while (nNxtButtonPressed != -1){}
 
-		if (button == 2){
-			moveFinger(0, false); //Index finger 
-		}else if(button == 3){
-		closeHand(true); 
-		
-		}else{
-			if (button == 1){
-				moveFinger(1, false); //Pinky finger 
-			}
+		if (button == 3){
+			idObject(); 
+			closeHand(true); //Have some check for when to stop 
+			
+			sendMessage(1); //Arm up, wrist, arm down 
+			
+			closeHand(false); 
+			
+			displayString(1, "Done Routine"); 
 		}
 		
-		if (button == 1){
-			sendMessage(1); 
-		}else if(button == 2){
-			sendMessage(2); 
-		}else{
-			if (button == 3){
-				sendMessage(3); 
-			}
-		}
+	
 	}
 }
