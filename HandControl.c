@@ -11,8 +11,7 @@ to the fingers closing and grasping an object.
 */
 
 
-//Moves a general finger, look into replacing
-//the three other functions with this one...
+//Moves a general finger
 void moveFinger(int finger, bool close){
 	time1[0] = 0; 
 
@@ -30,13 +29,22 @@ void moveFinger(int finger, bool close){
 
 
 */
-void closeHand(){
+void closeHand(bool close){
 
 	//Example of closing all the fingers
 	//motorA = 0, motorB = 1, motorC = 2
-	moveFinger(0, true); 
-	moveFinger(1, true); 
-	moveFinger(2, true); 
+	if (close){
+		motor[0] = 50; 
+		motor[1] = 50; 
+	}else{
+		motor[0] = -50; 
+		motor[1] = -50; 
+	} 
+	
+	time1[0] = 0; 
+	while (time1[0] < 2000){}
+	motor[0] = 0; 
+	motor[1] = 0; 
 
 }
 
@@ -50,14 +58,24 @@ task main (){
 	indicates that no message is being sent. 
 	*/
 
+
 	while (true){
 
 		while (nNxtButtonPressed == -1){}
-
 		int button = nNxtButtonPressed; 
+		while (nNxtButtonPressed != -1){}
 
-		while (nNxtButtonPressed != button){}
-
+		if (button == 2){
+			moveFinger(0, false); //Index finger 
+		}else if(button == 3){
+		closeHand(true); 
+		
+		}else{
+			if (button == 1){
+				moveFinger(1, false); //Pinky finger 
+			}
+		}
+		
 		if (button == 1){
 			sendMessage(1); 
 		}else if(button == 2){
