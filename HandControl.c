@@ -85,14 +85,21 @@ void idObject(){
 void liftObject () {
   	
   	sendMessageWithParm(1, 2);//arm, drop 
-    wait1Msec(3000); 
+    wait1Msec(2000); 
  	 	closeHand(true);
-    wait1Msec(3000); 
+    wait1Msec(2000); 
   	sendMessageWithParm(1, 1); //arm, lift
-    wait1Msec(3000); 
+    wait1Msec(2000); 
   	sendMessageWithParm(2, 1); //wrist, cw
-    wait1Msec(3000); 
+    wait1Msec(2000); 
   	sendMessageWithParm(1, 2); //arm, drop
+  	wait1Msec(2000);
+  	closeHand(false); 
+  	wait1Msec(2000); 
+  	sendMessageWithParm(1,1)//arm, lift
+  	wait1Msec(2000);
+  	sendMessageWithParm(2,1)//wrist,cw
+  	wait1Msec(2000);
 }
 
 
