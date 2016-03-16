@@ -51,11 +51,50 @@ void closeHand(bool close){
 
 }
 
+void startRoutine(){
+  sendMessageWithParm(1, 1); //arm, lift
+  wait1Msec(3000); 
+  
+  for (int i = 0; i < 2; i++){
+  	sendMessageWithParm(2, 1); //wrist, cw
+  	wait1Msec(2000);
+  	sendMessageWithParm(2, 2); //wrist, ccw
+  	wait1Msec(2000);
+    displayString(0, "FOR LOOP"); 
+  }
+
+}
+
+void byeRoutine(){
+  
+  for (int i = 0; i < 3; i++){
+		closeHand(true); 
+    closeHand(false); 
+  }
+  
+  sendMessageWithParm(1, 2); //arm, lift
+
+}
+
 void idObject(){
 
 	displayString(3, "DON'T FORGET ME"); 
 
 }
+
+void liftObject () {
+  	
+  	sendMessageWithParm(1, 2);//arm, drop 
+    wait1Msec(3000); 
+ 	 	closeHand(true);
+    wait1Msec(3000); 
+  	sendMessageWithParm(1, 1); //arm, lift
+    wait1Msec(3000); 
+  	sendMessageWithParm(2, 1); //wrist, cw
+    wait1Msec(3000); 
+  	sendMessageWithParm(1, 2); //arm, drop
+}
+
 
 task main (){
 
@@ -74,44 +113,37 @@ task main (){
 	
 	*/
 
+	SensorType[S1] = sensorColorNxtFULL; //Initialize colour sensor
+  int colour = 0; 
+  
+  SensorType[S2]=sensorTouch; //Initialize touch sensor
+  bool isTouch = false; 
+  
+  startRoutine(); 
+  
 	while (true){
+
 
 		while (nNxtButtonPressed == -1){}
 		int button = nNxtButtonPressed; 
 		while (nNxtButtonPressed != -1){}
     
-    SensorType[S2]=sensorTouch; //Initialize touch sensor
-    bool isTouch = false; 
-
-    SensorType[S1] = sensorColorNxtFULL; //Initialize colour sensor
-    int colour = 0; 
+    colour = SensorValue[S1]; //Gets colour when button is pressed  
     
-    colour = SensorValue[S1]; 
+    if (button == 3){
+    	liftObject(); 
+    }else if (button == 2){
+    	//Second routine 
+    }else{
+    	//Third routine 
+    }
+
     
     /*
     sendMessageWithParam(part_of_arm, direction_of_motion); 
     sendMessageWithParm(number_1,number_2,number_3);
     */ 
     
-    //Output function DON'T FORGET 
-    sendMessageWithParm(1, 2); //arm, drop
-    while (SensorValue[S2] != 1){}
-    stopArm(); //Make motorA and C = 0 BLUETOOTH  
-    
-    //Maybe change time/length based on object? 
-    closeHand(true);
-    
-    //Look into merging 
-    sendMessageWithParm(1, 1); //arm, lift
-    sendMessageWithParm(2, 1); //wrist, cw
-    
-    wait1Msec(5000); 
-    
-    sendMessageWithParm(1, 2); //arm, drop
-    while (SensorValue[S1] != -1){}
-    stopArm(); 
-      
-
     
     //Color snesor detects obj --> Via function, pass colour 
     //Output obj  
@@ -123,18 +155,8 @@ task main (){
     //Hangout 
     //Drop until colour sensor is activated 
     
-    
-		if (button == 3){
-			idObject(); 
-			closeHand(true); //Have some check for when to stop 
-			
-			sendMessage(1); //Arm up, wrist, arm down 
-			
-			closeHand(false); 
-			
-			displayString(1, "Done Routine"); 
-		}
-		
-	
-	}
+	} //End of while-loop 
+  
+  byeRoutine(); 
+  
 }
