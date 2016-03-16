@@ -60,7 +60,6 @@ void startRoutine(){
   	wait1Msec(2000);
   	sendMessageWithParm(2, 2); //wrist, ccw
   	wait1Msec(2000);
-    displayString(0, "FOR LOOP"); 
   }
 
 }
@@ -76,9 +75,19 @@ void byeRoutine(){
 
 }
 
-void idObject(){
+void idObject(int colour, string &object){
 
-	displayString(3, "DON'T FORGET ME"); 
+  if (colour == 1){
+  	object = "Black"; 
+  }else if (colour == 2){
+  	//return "Blue"; 
+  }else if (colour == 3){
+  
+  }else if (colour == 4){
+  	object = "Golf Ball"; 
+  }else{
+  	object = "White"; 
+  }
 
 }
 
@@ -96,9 +105,9 @@ void liftObject () {
   	wait1Msec(2000);
   	closeHand(false); 
   	wait1Msec(2000); 
-  	sendMessageWithParm(1,1)//arm, lift
+  	sendMessageWithParm(1,1);//arm, lift
   	wait1Msec(2000);
-  	sendMessageWithParm(2,1)//wrist,cw
+  	sendMessageWithParm(2,1);//wrist,cw
   	wait1Msec(2000);
 }
 
@@ -138,6 +147,9 @@ task main (){
     colour = SensorValue[S1]; //Gets colour when button is pressed  
     
     if (button == 3){
+      string object = ""; 
+      idObject(colour, object); 
+      displayString(0, "%s", object); 
     	liftObject(); 
     }else if (button == 2){
     	//Second routine 
