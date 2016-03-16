@@ -1,4 +1,6 @@
 /*
+ARMCONTROL.C
+
 This file contains the code that will control the elbow joint, as
 well as the wrist code. 
 */
@@ -13,7 +15,7 @@ void liftArm (bool lift){
   //Check the param being passed 
 	nMotorEncoder[motorA]= 0;
 
-	//Why are the two encoder values different? 
+	//Why are the two encoder values diffe rent? 
 	if (lift){
 		motor[motorA] = 75;
 		motor[motorC] = 75;
@@ -27,13 +29,12 @@ void liftArm (bool lift){
 		displayString(0, "Down"); 
 	}
 	
-	time1[0] = 0; 
+	time1[0] = 0;            
 	while (time1[0] < 2000){} 
 	
 	motor[motorA]=0;
 	motor[motorC]=0;
 }
-
 
 /*
 Rotates the wrist in a given direction through the 
@@ -62,6 +63,11 @@ void rotateWrist(bool clockwise){
 
 }
 
+void stopArm(){
+	motor[motorA] = 0; 
+  motor[motorC] = 0; 
+}
+
 
 bool messageAvailable(){
 	if (message == 0){
@@ -84,24 +90,47 @@ int getMessage(){
 
 task main(){ 
 		
+/* 	HOW THEY RECIEVE 
+ 		message_first = messageParm[0];
+	  message_second = messageParm[1];
+	  message_third = messageParm[2];
+*/
+  
 	int my_message = 0; 
-
+	int firstMessage, secondMessage; 
+  
 	while (true){
 
 		if (messageAvailable() == true){
 
-			my_message = getMessage(); //retrieve that message from memory.
-			displayString(0,"%d",my_message);
+			firstMessage = messageParm[0];
+      secondMessage = messageParm[1]; 
 
-			if (my_message == 1){
-				liftArm(true); 
-				rotateWrist(true); 
-				liftArm(false); 
-			}
-			
-		}
+      //Action relating to arm 
+			if (firstMessage == 1){
+        if (secondMessage == 1){
+        	//liftArm(true); 
+        }else{
+          if (secondMessage == 2){
+          	//liftArm(false); 
+          }
+        }
+      }else{
+        
+      //Action relating to wrist 
+        if (firstMessage == 2){
+          if (secondMessage == 1){
+           //rotateWrist(true);
+        	}else {
+            if (secondMessage == 2){
+              //rotateWrist(false);
+          	}
+      		}
+    		}
+      }
+    }
+  }
 
-		wait1Msec(100); 
+  wait1Msec(100); 
 
-	}
 }

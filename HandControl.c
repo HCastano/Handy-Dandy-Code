@@ -1,4 +1,7 @@
 /*
+HANDCONTROL.C 
+
+
 This file contains the code that will move the fingers of the hand. 
 There are three motors that will be used to move the fingers, with
 the groupings being as follows: 
@@ -76,7 +79,51 @@ task main (){
 		while (nNxtButtonPressed == -1){}
 		int button = nNxtButtonPressed; 
 		while (nNxtButtonPressed != -1){}
+    
+    SensorType[S2]=sensorTouch; //Initialize touch sensor
+    bool isTouch = false; 
 
+    SensorType[S1] = sensorColorNxtFULL; //Initialize colour sensor
+    int colour = 0; 
+    
+    colour = SensorValue[S1]; 
+    
+    /*
+    sendMessageWithParam(part_of_arm, direction_of_motion); 
+    sendMessageWithParm(number_1,number_2,number_3);
+    */ 
+    
+    //Output function DON'T FORGET 
+    sendMessageWithParm(1, 2); //arm, drop
+    while (SensorValue[S2] != 1){}
+    stopArm(); //Make motorA and C = 0 BLUETOOTH  
+    
+    //Maybe change time/length based on object? 
+    closeHand(true);
+    
+    //Look into merging 
+    sendMessageWithParm(1, 1); //arm, lift
+    sendMessageWithParm(2, 1); //wrist, cw
+    
+    wait1Msec(5000); 
+    
+    sendMessageWithParm(1, 2); //arm, drop
+    while (SensorValue[S1] != -1){}
+    stopArm(); 
+      
+
+    
+    //Color snesor detects obj --> Via function, pass colour 
+    //Output obj  
+    //Drop hand until touch sensor is activated 
+    //Stop moving 
+    //Close fingers --> How long? Who knows  
+    //Lift object --> Should be same as drop object 
+    //Once at top, rotate wrist
+    //Hangout 
+    //Drop until colour sensor is activated 
+    
+    
 		if (button == 3){
 			idObject(); 
 			closeHand(true); //Have some check for when to stop 
