@@ -26,14 +26,13 @@ void liftArm (bool lift){
 		motor[motorA] = -75;
 		motor[motorC] = -75;
 		//while (nMotorEncoder[motorA] > 0){}
-		displayString(0, "Down");
 
     while (time1[0] < 1000){}
     motor[motorA]=0;
 		motor[motorC]=0;
 	}
 
-	while (time1[0] < 1000){}
+	while (time1[0] < 2000){}
 
 	motor[motorA]=0;
 	motor[motorC]=0;
@@ -53,18 +52,21 @@ void rotateWrist(bool clockwise){
 	nMotorEncoder[motorB] = 0;
 
 	if (clockwise){
-		motor[motorB] = -25;
-		while (nMotorEncoder[motorB] >= -90){}
+		motor[motorB] = -35;
+		while (nMotorEncoder[motorB] >= -90){};
+		motor[motorB] = 0;
 	}else{
-		motor[motorB] = 25;
-		while (nMotorEncoder[motorB] <= 90){}
+		motor[motorB] = 35;
+		while (nMotorEncoder[motorB] <= 90){};
+		motor[motorB] = 0;
 	}
 
 	time1[0] = 0;
-	while (time1[0] < 2000){}
+	while (time1[0] < 1000){}
 	motor[motorB] = 0;
 
 }
+
 
 void stopArm(){
 	motor[motorA] = 0;
@@ -134,8 +136,8 @@ task main(){
 
         //FOR DEMO ONLY, REMEMBER TO REMOVE
         if (firstMessage == 3){
-        	displayString(0, "Hello from the");
-        	displayString(1, "phasor domain!!!");
+        	displayString(1, "Hello from the");
+        	displayString(2, "Bluetooth World!!!");
         }
 
       }

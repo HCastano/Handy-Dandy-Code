@@ -57,9 +57,9 @@ void startRoutine(){
 
   for (int i = 0; i < 2; i++){
   	sendMessageWithParm(2, 1); //wrist, cw
-  	wait1Msec(2000);
+  	wait1Msec(100);
   	sendMessageWithParm(2, 2); //wrist, ccw
-  	wait1Msec(2000);
+  	wait1Msec(100);
   }
 
 }
@@ -71,8 +71,9 @@ void byeRoutine(){
     closeHand(false);
   }
 
-  sendMessageWithParm(1, 2); //arm, lift
+  sendMessageWithParm(1, 2); //arm, drop
 
+  wait1Msec(2000);
 }
 
 void idObject(int colour, string &object){
@@ -82,13 +83,14 @@ void idObject(int colour, string &object){
   }else if (colour == 2){
   	object = "Pepsi Can";
   }else if (colour == 3){
-
+		object = "Tennis Ball";
   }else if (colour == 4){
   	object = "Golf Ball";
   }else{
+  	if (colour == 6){
   	object = "White";
+  	}
   }
-
 }
 
 void liftObject () {
@@ -100,7 +102,7 @@ void liftObject () {
   	sendMessageWithParm(1, 1); //arm, lift
     wait1Msec(2000);
   	sendMessageWithParm(2, 1); //wrist, cw
-    wait1Msec(2000);
+    wait1Msec(1000);
   	sendMessageWithParm(1, 2); //arm, drop
   	wait1Msec(2000);
   	closeHand(false);
@@ -108,7 +110,7 @@ void liftObject () {
   	sendMessageWithParm(1,1);//arm, lift
   	wait1Msec(2000);
   	sendMessageWithParm(2,1);//wrist,cw
-  	wait1Msec(2000);
+  	wait1Msec(1000);
 }
 
 void buttonPressAndRelease(){
@@ -122,7 +124,7 @@ void projectDemo(){
 	buttonPressAndRelease();
 
 	string object = "";
-	idObject(SensorValue[S2], object);
+	idObject(SensorValue[S1], object);
 	displayString(0, "%s", object);
 	buttonPressAndRelease();
 
@@ -133,12 +135,24 @@ void projectDemo(){
 	buttonPressAndRelease();
 
 	sendMessageWithParm(2, 1); //wrist, cw
-	wait1Msec(3000);
+	wait1Msec(1000);
 	sendMessageWithParm(2, 2); //wrist, cw
-	wait1Msec(3000);
+	wait1Msec(1000);
 	buttonPressAndRelease();
-	
+
 	//ADD DEMO FOR FINGERS
+	moveFinger(0, 0);
+	wait1Msec(2000);
+	moveFinger(0, 1);
+	wait1Msec(2000);
+	moveFinger(1, 0);
+	wait1Msec(2000);
+	moveFinger(1, 1);
+	wait1Msec(2000);
+	closeHand(true);
+	wait1Msec(2000);
+	closeHand(false);
+
 
 }
 
@@ -170,9 +184,10 @@ task main (){
 		while (nNxtButtonPressed != -1 && SensorValue[S2] != 0){}
 
 		if (sensorVal){
-			displayString(0, "DEMOO");
-			wait1Msec(3000);
+			displayString(0, "DEMO");
+			wait1Msec(1000);
 			projectDemo();
+			continue;
 		}
 
     colour = SensorValue[S1]; //Gets colour when button is pressed
@@ -196,6 +211,6 @@ task main (){
 
 	} //End of while-loop
 
-  byeRoutine();
+
 
 }
