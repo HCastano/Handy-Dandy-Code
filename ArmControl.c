@@ -43,11 +43,11 @@ void rotateWrist(bool clockwise){
 
 	if (clockwise){
 		motor[motorA] = 20;
-		while (nMotorEncoder[motorA] >= -90){};
+		while (nMotorEncoder[motorA] <= 90){};
 
 	}else{
 		motor[motorA] = -20;
-		while (nMotorEncoder[motorA] <= 90){};
+		while (nMotorEncoder[motorA] >= -90){};
 	}
 
 	motor[motorA] = 0;

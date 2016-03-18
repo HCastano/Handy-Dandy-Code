@@ -59,14 +59,13 @@ void startRoutine(){
   	sendMessageWithParm(2, 2); //wrist, ccw
   	wait1Msec(100);
   }
-
 }
 
 void byeRoutine(){
 
   for (int i = 0; i < 3; i++){
-		closeHand(true);
-    closeHand(false);
+		closeHand(true, 0, 0);
+    closeHand(false, 0, 0);
   }
 
   sendMessageWithParm(1, 2); //arm, drop
@@ -95,7 +94,7 @@ void liftObject () {
 
   	sendMessageWithParm(1, 2);//arm, drop
     wait1Msec(2000);
- 	 	closeHand(true);
+ 	 	closeHand(true,0,0);
     wait1Msec(2000);
   	sendMessageWithParm(1, 1); //arm, lift
     wait1Msec(2000);
@@ -103,7 +102,7 @@ void liftObject () {
     wait1Msec(1000);
   	sendMessageWithParm(1, 2); //arm, drop
   	wait1Msec(2000);
-  	closeHand(false);
+  	closeHand(false,0,0);
   	wait1Msec(2000);
   	sendMessageWithParm(1,1);//arm, lift
   	wait1Msec(2000);
@@ -147,9 +146,9 @@ void projectDemo(){
 	wait1Msec(2000);
 	moveFinger(1, 1);
 	wait1Msec(2000);
-	closeHand(true);
+	closeHand(true,0,0);
 	wait1Msec(2000);
-	closeHand(false);
+	closeHand(false,0,0);
 
 
 }
@@ -172,6 +171,7 @@ task main (){
   bool isTouch = false;
 
   startRoutine();
+	buttonPressAndRelease();
 
 	while (true){
 
