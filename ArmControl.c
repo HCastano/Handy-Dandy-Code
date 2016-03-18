@@ -12,7 +12,6 @@ in order to lift the arm.
 Param lift boolean containing whether to raise or drop the elbow
 */
 void liftArm (bool lift){
-  //Check the param being passed
 
 	if (lift){
 		motor[motorB] = -40;
@@ -40,7 +39,6 @@ Param cw Boolean contains the direction of rotation
 
 void rotateWrist(bool clockwise){
 
-	//Fix encoder
 	nMotorEncoder[motorA] = 0;
 
 	if (clockwise){
@@ -91,7 +89,6 @@ task main(){
 */
   ClearMessage();
 
-	int my_message = 0;
 	int firstMessage = 0, secondMessage = 0;
 
 	while (true){
@@ -122,13 +119,6 @@ task main(){
             }
           }
         }
-
-        //FOR DEMO ONLY, REMEMBER TO REMOVE
-        if (firstMessage == 3){
-        	displayString(1, "Hello from the");
-        	displayString(2, "Bluetooth World!!!");
-        }
-
       }
     }
 
