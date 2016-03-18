@@ -41,21 +41,18 @@ Param cw Boolean contains the direction of rotation
 void rotateWrist(bool clockwise){
 
 	//Fix encoder
-	nMotorEncoder[motorB] = 0;
+	nMotorEncoder[motorA] = 0;
 
 	if (clockwise){
-		motor[motorB] = -35;
-		while (nMotorEncoder[motorB] >= -90){};
-		motor[motorB] = 0;
+		motor[motorA] = 20;
+		while (nMotorEncoder[motorA] >= -90){};
+
 	}else{
-		motor[motorB] = 35;
-		while (nMotorEncoder[motorB] <= 90){};
-		motor[motorB] = 0;
+		motor[motorA] = -20;
+		while (nMotorEncoder[motorA] <= 90){};
 	}
 
-	time1[0] = 0;
-	while (time1[0] < 1000){}
-	motor[motorB] = 0;
+	motor[motorA] = 0;
 
 }
 
