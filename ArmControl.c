@@ -13,28 +13,20 @@ Param lift boolean containing whether to raise or drop the elbow
 */
 void liftArm (bool lift){
   //Check the param being passed
-	nMotorEncoder[motorA]= 0;
-	time1[0] = 0;
 
-	//Why are the two encoder values different?
 	if (lift){
-		motor[motorA] = 75;
-		motor[motorC] = 75;
-		//while (nMotorEncoder[motorA]<720){};
-	}else {
-		//Check encoder value, something wrong
-		motor[motorA] = -75;
-		motor[motorC] = -75;
-		//while (nMotorEncoder[motorA] > 0){}
+		motor[motorB] = -40;
+		motor[motorC] = -40;
 
-    while (time1[0] < 1000){}
-    motor[motorA]=0;
-		motor[motorC]=0;
+	}else {
+		motor[motorB] = 40;
+		motor[motorC] = 40;
+
 	}
 
-	while (time1[0] < 2000){}
+	wait1Msec(2000);
 
-	motor[motorA]=0;
+	motor[motorB]=0;
 	motor[motorC]=0;
 }
 
