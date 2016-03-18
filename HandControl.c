@@ -32,22 +32,20 @@ void moveFinger(int finger, bool close){
 
 
 */
-void closeHand(bool close){
+void closeHand(bool close, int power, int time){
 
-	//Example of closing all the fingers
-	//motorA = 0, motorB = 1, motorC = 2
 	if (close){
-		motor[0] = 50;
-		motor[1] = 50;
+		motor[motorA] = power;
+		motor[motorB] = power;
 	}else{
-		motor[0] = -50;
-		motor[1] = -50;
+		motor[motorA] = -power;
+		motor[motorB] = -power;
 	}
 
 	time1[0] = 0;
-	while (time1[0] < 2000){}
-	motor[0] = 0;
-	motor[1] = 0;
+	while (time1[0] < time){}
+	motor[motorA] = 0;
+	motor[motorB] = 0;
 
 }
 
