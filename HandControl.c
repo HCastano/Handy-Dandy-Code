@@ -34,6 +34,9 @@ void moveFinger(int finger, bool close){
 */
 void closeHand(bool close, int power, int time){
 
+	//Get rid of close param by sending in negative
+	//powers into the function
+
 	if (close){
 		motor[motorA] = power;
 		motor[motorB] = power;
@@ -92,22 +95,23 @@ void idObject(int colour, string &object){
 
 void liftObject () {
 
+		sendMessageWithParm(2, 1);
   	sendMessageWithParm(1, 2);//arm, drop
-    wait1Msec(2000);
- 	 	closeHand(true,0,0);
-    wait1Msec(2000);
-  	sendMessageWithParm(1, 1); //arm, lift
-    wait1Msec(2000);
-  	sendMessageWithParm(2, 1); //wrist, cw
+    wait1Msec(3000);
+		while (nNxtButtonPressed == -1){}
+		while (nNxtButtonPressed != -1){}
+
+    closeHand(true, 45, 800);
     wait1Msec(1000);
-  	sendMessageWithParm(1, 2); //arm, drop
-  	wait1Msec(2000);
-  	closeHand(false,0,0);
-  	wait1Msec(2000);
-  	sendMessageWithParm(1,1);//arm, lift
-  	wait1Msec(2000);
-  	sendMessageWithParm(2,1);//wrist,cw
-  	wait1Msec(1000);
+    sendMessageWithParm(1, 1);
+    wait1Msec(5000);
+    sendMessageWithParm(1, 2);
+    wait1Msec(2000);
+    closeHand(false, 30, 1000);
+    wait1Msec(2000);
+    sendMessageWithParm(1, 1);
+    sendMessageWithParm(2, 2);
+
 }
 
 void buttonPressAndRelease(){
@@ -171,29 +175,20 @@ task main (){
   bool isTouch = false;
 
   startRoutine();
-	buttonPressAndRelease();
 
 	while (true){
 
-
-		while (nNxtButtonPressed == -1 && SensorValue[S2] == 0){}
+		while (nNxtButtonPressed == -1){}
 		int button = nNxtButtonPressed;
 		int sensorVal = SensorValue[S2];
-		while (nNxtButtonPressed != -1 && SensorValue[S2] != 0){}
-
-		if (sensorVal){
-			displayString(0, "DEMO");
-			wait1Msec(1000);
-			projectDemo();
-			continue;
-		}
+		while (nNxtButtonPressed != -1){}
 
     colour = SensorValue[S1]; //Gets colour when button is pressed
 
     if (button == 3){
       string object = "";
       idObject(colour, object);
-      displayString(0, "%s", object);
+      displayString(4, "%s", object);
     	liftObject();
     }else if (button == 2){
     	//Second routine
