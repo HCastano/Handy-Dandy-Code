@@ -13,6 +13,15 @@ This file will also gather sensor information, which will lead
 to the fingers closing and grasping an object.
 */
 
+void handShake();
+void fistBump();
+void moveFinger(int finger, bool close);
+void closeHand(bool close, int power, int time);
+void startRoutine();
+void waveFingers();
+void idObject(int colour, string &object);
+void liftObject ();
+void buttonPressAndRelease();
 
 //Moves a general finger
 void moveFinger(int finger, bool close){
@@ -53,7 +62,7 @@ void closeHand(bool close, int power, int time){
 }
 
 void startRoutine(){
-  sendMessageWithParm(1, 1); //arm, lift
+  sendMessageWithParm(1, 1, 2000); //arm, lift
   wait1Msec(3000);
 
   for (int i = 0; i < 2; i++){
@@ -64,16 +73,61 @@ void startRoutine(){
   }
 }
 
-void byeRoutine(){
+void waveFingers(){
 
   for (int i = 0; i < 3; i++){
-		closeHand(true, 0, 0);
-    closeHand(false, 0, 0);
+		closeHand(true, 25, 500);
+		wait1Msec(500);
+    closeHand(false, 25, 500);
+    wait1Msec(500);
   }
 
-  sendMessageWithParm(1, 2); //arm, drop
+  sendMessageWithParm(1, 2, 2000); //arm, drop
 
   wait1Msec(2000);
+}
+
+void handShake(){
+
+		sendMessageWithParm(2, 2);
+		wait1Msec(1000);
+
+  	sendMessageWithParm(1,2, 1200);
+  	wait1Msec(3000);
+
+  	closeHand(true, 20, 400);
+
+  	for (int i = 0; i < 2; i++){
+  		sendMessageWithParm(1, 1, 300);
+  		wait1Msec(300);
+  		sendMessageWithParm(1, 2, 300);
+  		wait1Msec(300);
+  	}
+
+  	wait1Msec(1000);
+  	closeHand(false, 20, 400);
+  	wait1Msec(1000);
+
+  	sendMessageWithParm(1, 1, 1200);
+  	wait1Msec(2000);
+
+  	sendMessageWithParm(2, 1);
+
+}
+
+//How are we going to release it???
+void fistBump(){
+  sendMessageWithParm(1,2, 1000);
+  wait1Msec(2000);
+  closeHand(true, 30 , 1000);
+
+  while (nNxtButtonPressed == -1){}
+  while (nNxtButtonPressed != -1){}
+  closeHand(false, 30, 1000);
+
+  while (nNxtButtonPressed == -1){}
+  while (nNxtButtonPressed != -1){}
+  sendMessageWithParm(1,1, 1000);
 }
 
 void idObject(int colour, string &object){
@@ -96,20 +150,20 @@ void idObject(int colour, string &object){
 void liftObject () {
 
 		sendMessageWithParm(2, 1);
-  	sendMessageWithParm(1, 2);//arm, drop
+  	sendMessageWithParm(1, 2, 2000);//arm, drop
     wait1Msec(3000);
 		while (nNxtButtonPressed == -1){}
 		while (nNxtButtonPressed != -1){}
 
     closeHand(true, 45, 800);
     wait1Msec(1000);
-    sendMessageWithParm(1, 1);
+    sendMessageWithParm(1, 1, 2000);
     wait1Msec(5000);
-    sendMessageWithParm(1, 2);
+    sendMessageWithParm(1, 2, 2000);
     wait1Msec(2000);
     closeHand(false, 30, 1000);
     wait1Msec(2000);
-    sendMessageWithParm(1, 1);
+    sendMessageWithParm(1, 1, 2000);
     sendMessageWithParm(2, 2);
 
 }
@@ -119,48 +173,11 @@ void buttonPressAndRelease(){
 	while (nNxtButtonPressed != -1){}
 }
 
-void projectDemo(){
-
-	sendMessageWithParm(3,0); //Bluetooth Message
-	buttonPressAndRelease();
-
-	string object = "";
-	idObject(SensorValue[S1], object);
-	displayString(0, "%s", object);
-	buttonPressAndRelease();
-
-	sendMessageWithParm(1, 1); //arm, lift
-	wait1Msec(3000);
-	sendMessageWithParm(1, 2); //arm, drop
-	wait1Msec(3000);
-	buttonPressAndRelease();
-
-	sendMessageWithParm(2, 1); //wrist, cw
-	wait1Msec(1000);
-	sendMessageWithParm(2, 2); //wrist, cw
-	wait1Msec(1000);
-	buttonPressAndRelease();
-
-	//ADD DEMO FOR FINGERS
-	moveFinger(0, 0);
-	wait1Msec(2000);
-	moveFinger(0, 1);
-	wait1Msec(2000);
-	moveFinger(1, 0);
-	wait1Msec(2000);
-	moveFinger(1, 1);
-	wait1Msec(2000);
-	closeHand(true,0,0);
-	wait1Msec(2000);
-	closeHand(false,0,0);
-
-
-}
-
 
 task main (){
 
 	wait1Msec(500);
+
 
 	/*
 	Transmits a sequence of integers ever 1/10th of a second.
@@ -175,6 +192,15 @@ task main (){
   bool isTouch = false;
 
   startRoutine();
+
+	while (nNxtButtonPressed == -1){}
+	while (nNxtButtonPressed != -1){}
+	//fistBump();
+	//handShake();
+	//waveFingers();
+	liftObject();
+	while (nNxtButtonPressed == -1){}
+	while (nNxtButtonPressed != -1){}
 
 	while (true){
 

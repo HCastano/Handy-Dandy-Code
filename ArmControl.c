@@ -11,19 +11,19 @@ in order to lift the arm.
 
 Param lift boolean containing whether to raise or drop the elbow
 */
-void liftArm (bool lift){
+void liftArm (bool lift, int time){
 
 	if (lift){
-		motor[motorB] = -40;
-		motor[motorC] = -40;
-
-	}else {
 		motor[motorB] = 40;
 		motor[motorC] = 40;
 
+	}else {
+		motor[motorB] = -40;
+		motor[motorC] = -40;
+
 	}
 
-	wait1Msec(2000);
+	wait1Msec(time);
 
 	motor[motorB]=0;
 	motor[motorC]=0;
@@ -89,7 +89,7 @@ task main(){
 */
   ClearMessage();
 
-	int firstMessage = 0, secondMessage = 0;
+	int firstMessage = 0, secondMessage = 0, thirdMessage = 0;
 
 	while (true){
 
@@ -98,13 +98,14 @@ task main(){
 
 			firstMessage = messageParm[0];
       secondMessage = messageParm[1];
+			thirdMessage = messageParm[2];
 
       if (firstMessage == 1){
         if (secondMessage == 1){
-        	liftArm(true);
+        	liftArm(true, thirdMessage);
         }else{
           if (secondMessage == 2){
-            liftArm(false);
+            liftArm(false, thirdMessage);
           } //End of if
         } //End of else
       } //End of if
