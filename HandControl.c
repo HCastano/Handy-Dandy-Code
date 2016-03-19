@@ -62,8 +62,8 @@ void closeHand(bool close, int power, int time){
 }
 
 void startRoutine(){
-  sendMessageWithParm(1, 1, 2000); //arm, lift
-  wait1Msec(3000);
+  //sendMessageWithParm(1, 1, 2000); //arm, lift
+  wait1Msec(2000);
 
   for (int i = 0; i < 2; i++){
   	sendMessageWithParm(2, 1); //wrist, cw
@@ -81,8 +81,6 @@ void waveFingers(){
     closeHand(false, 25, 500);
     wait1Msec(500);
   }
-
-  sendMessageWithParm(1, 2, 2000); //arm, drop
 
   wait1Msec(2000);
 }
@@ -120,13 +118,11 @@ void fistBump(){
   sendMessageWithParm(1,2, 1000);
   wait1Msec(2000);
   closeHand(true, 30 , 1000);
+  wait1Msec(5000);
 
-  while (nNxtButtonPressed == -1){}
-  while (nNxtButtonPressed != -1){}
   closeHand(false, 30, 1000);
+	wait1Msec(2000);
 
-  while (nNxtButtonPressed == -1){}
-  while (nNxtButtonPressed != -1){}
   sendMessageWithParm(1,1, 1000);
 }
 
@@ -149,7 +145,7 @@ void idObject(int colour, string &object){
 
 void liftObject () {
 
-		sendMessageWithParm(2, 1);
+		sendMessageWithParm(2, 2);
   	sendMessageWithParm(1, 2, 2000);//arm, drop
     wait1Msec(3000);
 		while (nNxtButtonPressed == -1){}
@@ -164,7 +160,7 @@ void liftObject () {
     closeHand(false, 30, 1000);
     wait1Msec(2000);
     sendMessageWithParm(1, 1, 2000);
-    sendMessageWithParm(2, 2);
+    sendMessageWithParm(2, 1);
 
 }
 
@@ -185,41 +181,67 @@ task main (){
 	indicates that no message is being sent.
 	*/
 
-	SensorType[S1] = sensorColorNxtFULL; //Initialize colour sensor
+	int button = 0, touch1Pressed = 0, touch2Pressed = 0,
+	sonarDistance = 0, count = 0;
+
+	SensorType[S1] = sensorTouch;
+	SensorType [S2] = sensorTouch;
+
+	SensorType[S3] = sensorColorNxtFULL; //Initialize colour sensor
   int colour = 0;
 
-  SensorType[S2]=sensorTouch; //Initialize touch sensor
-  bool isTouch = false;
+  SensorType[S4] = sensorSONAR;
 
+  //Lift arm, shake wrist
+  sendMessageWithParm(1, 1, 2000);
   startRoutine();
-
-	while (nNxtButtonPressed == -1){}
-	while (nNxtButtonPressed != -1){}
-	//fistBump();
-	//handShake();
-	//waveFingers();
-	liftObject();
-	while (nNxtButtonPressed == -1){}
-	while (nNxtButtonPressed != -1){}
 
 	while (true){
 
-		while (nNxtButtonPressed == -1){}
-		int button = nNxtButtonPressed;
-		int sensorVal = SensorValue[S2];
-		while (nNxtButtonPressed != -1){}
+		while (nNxtButtonPressed == -1 && SensorValue[S1] == 0 &&
+			SensorValue[S2] == 0 && SensorValue[S4] > 10){}
+		button = nNxtButtonPressed;
+		touch1Pressed = SensorValue[S1];
+		touch2Pressed = SensorValue[S2];
+		sonarDistance = SensorValue[S4];
+
+		while (nNxtButtonPressed != -1 && SensorValue[S1] != 0 &&
+			SensorValue[S2] != 0 && SensorValue[S4] < 20){}
+
+		eraseDisplay();
 
     colour = SensorValue[S1]; //Gets colour when button is pressed
 
-    if (button == 3){
+    if (touch1Pressed){
+    	startRoutine(); //CHECK HEIGHT BEFORE TYRING
+    	displayString(4, "Start Routine");
+
+    }else if (touch2Pressed){
+    	waveFingers();
+			displayString(4, "Good Bye");
+
+    }else if(sonarDistance <= 10){
+    		displayString(4, "Bump/Shake");
+
+    		if (count % 2 == 0)
+    			handShake();
+    		else
+    			fistBump();
+
+    		count++;
+
+    }else{
+    	if (button == 3){
+    		displayString(4, "Exit");
+    		break;
+    	}
+    }
+
+    if (button == 1){
       string object = "";
       idObject(colour, object);
       displayString(4, "%s", object);
-    	liftObject();
-    }else if (button == 2){
-    	//Second routine
-    }else{
-    	//Third routine
+    	//liftObject();
     }
 
 
@@ -230,6 +252,7 @@ task main (){
 
 	} //End of while-loop
 
-
+	//Drop arm at the end of program
+	sendMessageWithParm(1, 2, 2000);
 
 }
