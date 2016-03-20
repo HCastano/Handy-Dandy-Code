@@ -77,9 +77,9 @@ void waveFingers(){
 
   for (int i = 0; i < 3; i++){
 		closeHand(true, 25, 500);
-		wait1Msec(500);
+		wait1Msec(300);
     closeHand(false, 25, 500);
-    wait1Msec(500);
+    wait1Msec(300);
   }
 
   wait1Msec(2000);
@@ -118,10 +118,10 @@ void fistBump(){
   sendMessageWithParm(1,2, 1000);
   wait1Msec(2000);
   closeHand(true, 30 , 1000);
-  wait1Msec(5000);
+  wait1Msec(3000);
 
   closeHand(false, 30, 1000);
-	wait1Msec(2000);
+	wait1Msec(1000);
 
   sendMessageWithParm(1,1, 1000);
 }
@@ -213,7 +213,7 @@ task main (){
     colour = SensorValue[S1]; //Gets colour when button is pressed
 
     if (touch1Pressed){
-    	startRoutine(); //CHECK HEIGHT BEFORE TYRING
+    	startRoutine();
     	displayString(4, "Start Routine");
 
     }else if (touch2Pressed){
