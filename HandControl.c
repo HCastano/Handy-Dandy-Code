@@ -1,16 +1,10 @@
 /*
-HANDCONTROL.C
+This file contains the code that controls the communication between
+the two NXT bricks, executes routines (through the use of sensors),
+and directly controls the motion of the fingers. 
 
+Written By: Hernando Castano, Saienath Poopalarajah, Jio Wang
 
-This file contains the code that will move the fingers of the hand.
-There are three motors that will be used to move the fingers, with
-the groupings being as follows:
-	Thumb - MotorA
-	Index and Middle Fingers - MotorB
-	Ring and Pinky Fingers - MotorC
-
-This file will also gather sensor information, which will lead
-to the fingers closing and grasping an object.
 */
 
 void handShake();
@@ -21,7 +15,6 @@ void startRoutine();
 void waveFingers();
 void idObject(int colour, string &object);
 void liftObject ();
-void buttonPressAndRelease();
 
 //Moves a general finger
 void moveFinger(int finger, bool close){
@@ -163,12 +156,6 @@ void liftObject () {
     sendMessageWithParm(2, 1);
 
 }
-
-void buttonPressAndRelease(){
-	while (nNxtButtonPressed == -1){}
-	while (nNxtButtonPressed != -1){}
-}
-
 
 task main (){
 

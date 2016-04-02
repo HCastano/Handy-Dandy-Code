@@ -1,9 +1,13 @@
 /*
-ARMCONTROL.C
+This file contains the code that controls the motion of the arm
+and wrist. These functions are called via Bluetooth from the HandControl
+program. 
 
-This file contains the code that will control the elbow joint, as
-well as the wrist code.
+Written By: Hernando Castano, Saienath Poopalarajah, Jio Wang
+
 */
+
+
 
 /*
 Activates the two motors at the elbow joint
@@ -83,16 +87,15 @@ int getMessage(){
 task main(){
 
 /* 	HOW THEY RECIEVE
- 		message_first = messageParm[0];
-	  message_second = messageParm[1];
-	  message_third = messageParm[2];
+ 	message_first = messageParm[0];
+	message_second = messageParm[1];
+	message_third = messageParm[2];
 */
   ClearMessage();
 
 	int firstMessage = 0, secondMessage = 0, thirdMessage = 0;
 
 	while (true){
-
 
 		if (messageAvailable() == true){
 
