@@ -258,15 +258,13 @@ It does this by taking input from various sensors, and calling
 the appropriate functions. 
 
 Routines: 
-All routines are started based on an assumed standard 
-position of the arm. This stardard position is the 
-arm lifted and the wrist neutral. 
+All routines are started based on an assumed standard position of the arm. 
+The stardard position is the arm lifted and the wrist neutral. 
 
 Bluetooth: 
-The HandControl program sent messages via Bluetooth the ArmControl
-program. This allowed for a way to control motors that were
-not directly attached to the brick without having to provide input 
-in two different places. 
+The HandControl program sent messages via Bluetooth the ArmControl program. 
+This allowed for a way to control motors that were not directly attached 
+to the brick without having to provide input in two different places. 
 
 The sendMessageWithParam function was used to send messages, and it 
 was used with the following convention: 
@@ -348,18 +346,16 @@ task main (){
 
     	count++;
 
+    }else if (button == 1){
+      string object = ""; 
+      idObject(colour, object); 
+      displayString(4, "%s", object);
+      liftObject(); 
     }else{
     	if (button == 3){
     		displayString(4, "Exit");
     		break;
     	}
-    }
-
-    if (button == 1){
-      string object = "";
-      idObject(colour, object);
-      displayString(4, "%s", object);
-    	//liftObject();
     }
 
 	} //End of while-loop
